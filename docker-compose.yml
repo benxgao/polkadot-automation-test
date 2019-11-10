@@ -1,0 +1,60 @@
+version: '3'
+services:
+  node_alice:
+    image: parity/substrate
+    volumes:
+      - './tmp/node_alice:/mnt/node'
+    networks:
+      - network-a
+      - internet
+    command:
+      - --chain=local
+      - --base-path=/mnt/node
+      - --alice
+      - --node-key=0000000000000000000000000000000000000000000000000000000000000001
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --telemetry-url=ws://telemetry.polkadot.io:1024
+    ports:
+      - '9933:9933'
+      - '9944:9944'
+      - '30333:30333'
+  node_bob:
+    image: parity/substrate
+    volumes:
+      - './tmp/node_bob:/mnt/node'
+    networks:
+      - network-a
+      - internet
+    command:
+      - --chain=local
+      - --base-path=/mnt/node
+      - --bob
+      # - --bootnodes=/ip4/192.168.0.3/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR \
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --telemetry-url=ws://telemetry.polkadot.io:1024
+    ports:
+      - '9934:9933'
+      - '9945:9944'
+      - '30334:30333'
+  polkadot-ui:
+    image: centrifugeio/polkadot-ui
+    networks:
+      - network-a
+      - internet
+    ports:
+      - '3000:80'
+    links:
+      - node_alice
+      - node_bob
+volumes:
+  node_alice:
+  node_bob:
+  polkadot-ui:
+
+networks:
+  network-a:
+  internet:

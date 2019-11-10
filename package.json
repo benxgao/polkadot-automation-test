@@ -1,0 +1,19 @@
+{
+  "name": "substrate-automation-test",
+  "version": "0.0.1",
+  "description": "Automation testing with Substrate and Polkadot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benxgao/substrate-automation-test.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benxgao/substrate-automation-test/issues"
+  },
+  "homepage": "https://github.com/benxgao/substrate-automation-test#readme"
+}
