@@ -4,7 +4,10 @@
   "description": "Automation testing with Substrate and Polkadot",
   "main": "src/index.js",
   "scripts": {
-    "test": "yarn test"
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "repository": {
     "type": "git",
@@ -20,10 +23,19 @@
     "@polkadot/api": "^0.96.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-polyfill": "^6.26.0",
     "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.0.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
+    "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.19.1"
   }
