@@ -49,10 +49,22 @@ services:
     links:
       - node_alice
       - node_bob
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    networks:
+      # - network-a
+      - internet
+    volumes:
+      - './tmp/test:/app'
+    # command: ['wait_for_it.sh', 'node_alice:9944', '--', 'npm', 'run', 'test']
+    command: ['./wait_for_testnet.sh']
 volumes:
   node_alice:
   node_bob:
   polkadot-ui:
+  test:
 
 networks:
   # network-a:

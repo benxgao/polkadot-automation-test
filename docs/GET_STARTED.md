@@ -7,7 +7,7 @@
 ## Links
 
 [polkadot-ui-docker-image](https://hub.docker.com/r/centrifugeio/polkadot-ui)
-
+[substrate frontend](https://substrate.dev/docs/en/tutorials/substrate-front-end/part-1-connect-to-a-node)
 
 ## notes
 
@@ -15,6 +15,7 @@ Check TCP connection
 
 `nc -vz 127.0.0.1 9944`
 
+wss://dev-node.substrate.dev:9944
 node_alice:9944
 
 Substrate local testnet telemetry: `https://telemetry.polkadot.io/#list/Local%20Testnet`
