@@ -19,5 +19,8 @@ node_alice:9944
 
 Substrate local testnet telemetry: `https://telemetry.polkadot.io/#list/Local%20Testnet`
 
+FINE - `dc ps` shows ip address `0.0.0.0`
+
+
 192.168.160.3
 192.168.160.4
