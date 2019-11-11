@@ -5,7 +5,7 @@ services:
     volumes:
       - './tmp/node_alice:/mnt/node'
     networks:
-      - network-a
+      # - network-a
       - internet
     command:
       - --chain=local
@@ -25,13 +25,12 @@ services:
     volumes:
       - './tmp/node_bob:/mnt/node'
     networks:
-      - network-a
+      # - network-a
       - internet
     command:
       - --chain=local
       - --base-path=/mnt/node
       - --bob
-      # - --bootnodes=/ip4/192.168.0.3/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR \
       - --validator
       - --ws-external
       - --rpc-external
@@ -43,7 +42,7 @@ services:
   polkadot-ui:
     image: centrifugeio/polkadot-ui
     networks:
-      - network-a
+      # - network-a
       - internet
     ports:
       - '3000:80'
@@ -56,5 +55,5 @@ volumes:
   polkadot-ui:
 
 networks:
-  network-a:
+  # network-a:
   internet:
