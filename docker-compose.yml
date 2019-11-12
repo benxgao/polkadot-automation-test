@@ -63,7 +63,8 @@ services:
     #   - network-a
     #   - internet
     volumes:
-      - './tmp/test:/media'
+      - './tmp/test:/mnt/app'
+      - './tmp/media:/mnt/media'
     # command: ['wait_for_it.sh', 'node_alice:9944', '--', 'npm', 'run', 'test']
     # command: ['npm', 'run', 'test']
     command: ['npm', 'start']
