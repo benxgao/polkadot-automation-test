@@ -1,23 +1,42 @@
-FROM node:13.1.0-alpine
+FROM node:10
+
+LABEL maintainer "ben.gao@centrality.ai"
+
+ENV PROJECT_DIR=/app
+WORKDIR $PROJECT_DIR
+RUN echo $PWD
 
 # RUN apt-get -q update && apt-get -qy install netcat
 # RUN git clone git@github.com:vishnubob/wait-for-it.git
 
-WORKDIR /usr
-
-COPY package.json .
+COPY package.json $PROJECT_DIR
 RUN npm install
 RUN npm audit fix
+COPY . $PROJECT_DIR
 
-COPY . .
-COPY ./scripts/wait-for-it.sh wait-for-it.sh
+# RUN apk add --no-cache --virtual .gyp python make g++ \
+#   && npm install \
+#   && apk del .gyp
 
-RUN chmod +x wait-for-it.sh
+ENV MEDIA_DIR=/media \
+  NODE_ENV=test \
+  APP_PORT=3000
 
-# ENTRYPOINT [ "/bin/bash"]
+RUN echo $PWD
+RUN ls -l
 
-CMD ["./wait-for-it.sh" , "node_alice:9944" , "--strict" , "--timeout=30000" , "--" , "npm run test -- --watch"]
+# HEALTHCHECK --interval=1m --timeout=3s \
+#   CMD curl -f http://localhost:8080 || exit 1
+# RUN chmod +x wait-for-it.sh
+# ENTRYPOINT [ "/usr/src/app/scripts/entry-point.sh"]
+# CMD ["./wait-for-it.sh" , "node_alice:9944" , "--strict" , "--timeout=30000" , "--" , "npm run test -- --watch"]
 
-# CMD ["npm", "run", "test", "--", "--watch"]
+VOLUME $MEDIA_DIR
+EXPOSE $APP_PORT
 
+HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit 1
+
+ENTRYPOINT ["./scripts/entrypoint.sh"]
+CMD ["start"]
+# CMD ["npm", "run", "test"]
 # CMD ["tail", "-f", "/dev/null"]
