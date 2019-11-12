@@ -3,19 +3,21 @@ FROM node:13.1.0-alpine
 # RUN apt-get -q update && apt-get -qy install netcat
 # RUN git clone git@github.com:vishnubob/wait-for-it.git
 
-WORKDIR /usr/app
+WORKDIR /usr
 
 COPY package.json .
 RUN npm install
+RUN npm audit fix
 
 COPY . .
 COPY ./scripts/wait-for-it.sh wait-for-it.sh
 
 RUN chmod +x wait-for-it.sh
 
-ENTRYPOINT [ "/bin/bash", "-c" ]
+# ENTRYPOINT [ "/bin/bash"]
 
-# CMD ["./wait-for-it.sh" , "[ENTER YOUR ENDPOINT HERE]" , "--strict" , "--timeout=300" , "--" , "YOUR REAL START COMMAND"]
+CMD ["./wait-for-it.sh" , "node_alice:9944" , "--strict" , "--timeout=30000" , "--" , "npm run test -- --watch"]
 
-CMD ["npm", "run", "test"]
+# CMD ["npm", "run", "test", "--", "--watch"]
 
+# CMD ["tail", "-f", "/dev/null"]

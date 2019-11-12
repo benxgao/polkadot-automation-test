@@ -3,10 +3,10 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 
 describe('api', () => {
   test('should be able to be initialized', async () => {
-    const wsProvider = new WsProvider('ws://0.0.0.0:9944');
-    const apiPromise = await ApiPromise.create({ provider: wsProvider });
+    const wsProvider = new WsProvider('wss://dev-node.substrate.dev:9944');
+    const api = await ApiPromise.create({ provider: wsProvider });
 
-    await apiPromise.isReady;
+    await api.isReady;
 
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),
