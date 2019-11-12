@@ -4,9 +4,9 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_alice:/mnt/node'
-    networks:
-      # - network-a
-      - internet
+    # networks:
+    #   - network-a
+    #   - internet
     command:
       - --chain=local
       - --base-path=/mnt/node
@@ -24,9 +24,9 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_bob:/mnt/node'
-    networks:
-      # - network-a
-      - internet
+    # networks:
+    #   - network-a
+    #   - internet
     command:
       - --chain=local
       - --base-path=/mnt/node
@@ -41,9 +41,9 @@ services:
       - '30334:30333'
   polkadot-ui:
     image: centrifugeio/polkadot-ui
-    networks:
-      # - network-a
-      - internet
+    # networks:
+    #   - network-a
+    #   - internet
     ports:
       - '3000:80'
     links:
@@ -53,19 +53,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    networks:
-      # - network-a
-      - internet
+    depends_on:
+      - node_alice
+      - node_bob
+    # networks:
+    #   - network-a
+    #   - internet
     volumes:
-      - './tmp/test:/app'
+      - './tmp/test:/media'
     # command: ['wait_for_it.sh', 'node_alice:9944', '--', 'npm', 'run', 'test']
-    command: ['./wait_for_testnet.sh']
+    command: ['npm', 'run', 'test', '-- --coverage']
 volumes:
   node_alice:
   node_bob:
   polkadot-ui:
   test:
-
-networks:
-  # network-a:
-  internet:
+# networks:
+#   network-a:
+#   internet:
