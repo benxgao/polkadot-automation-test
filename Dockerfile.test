@@ -39,7 +39,7 @@ RUN ls -l
 VOLUME $MEDIA_DIR
 EXPOSE $APP_PORT
 
-HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit 1
+HEALTHCHECK CMD curl --fail ws://node_alice:$APP_PORT || exit 1
 
 RUN chmod +x ./scripts/*
 ENTRYPOINT ["./scripts/entrypoint.sh"]
