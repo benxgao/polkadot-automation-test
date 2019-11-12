@@ -53,16 +53,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    depends_on:
+    links:
       - node_alice
       - node_bob
+      - polkadot-ui
+    ports:
+      - '8080:8080'
     # networks:
     #   - network-a
     #   - internet
     volumes:
       - './tmp/test:/media'
     # command: ['wait_for_it.sh', 'node_alice:9944', '--', 'npm', 'run', 'test']
-    command: ['npm', 'run', 'test', '-- --coverage']
+    # command: ['npm', 'run', 'test']
+    command: ['npm', 'start']
 volumes:
   node_alice:
   node_bob:

@@ -2,6 +2,12 @@ FROM node:10
 
 LABEL maintainer "ben.gao@centrality.ai"
 
+RUN apt-get update && apt-get install -y \
+  automake \
+  netcat \
+  curl \
+  && rm -rf /var/lib/apt/lists/*
+
 ENV PROJECT_DIR=/app
 WORKDIR $PROJECT_DIR
 RUN echo $PWD
@@ -37,6 +43,7 @@ HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit 1
 
 RUN chmod +x ./scripts/*
 ENTRYPOINT ["./scripts/entrypoint.sh"]
-CMD ["start"]
+
+# CMD ["start"]
 # CMD ["npm", "run", "test"]
 # CMD ["tail", "-f", "/dev/null"]

@@ -4,7 +4,8 @@
   "description": "Automation testing with Substrate and Polkadot",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "start": "node src/server.js",
+    "test": "jest --coverage"
   },
   "engines": {
     "node": ">=10"
