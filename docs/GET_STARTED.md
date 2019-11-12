@@ -22,6 +22,7 @@ Substrate local testnet telemetry: `https://telemetry.polkadot.io/#list/Local%20
 
 FINE - `dc ps` shows ip address `0.0.0.0`
 
+#!/usr/bin/env sh
 
 192.168.160.3
 192.168.160.4
