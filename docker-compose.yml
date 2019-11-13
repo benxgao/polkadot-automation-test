@@ -4,9 +4,10 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_alice:/mnt/node'
-    # networks:
-    #   - network-a
-    #   - internet
+    networks:
+      testnet:
+        aliases:
+          - node_alice
     command:
       - --chain=local
       - --base-path=/mnt/node
@@ -24,9 +25,10 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_bob:/mnt/node'
-    # networks:
-    #   - network-a
-    #   - internet
+    networks:
+      testnet:
+        aliases:
+          - node_bob
     command:
       - --chain=local
       - --base-path=/mnt/node
@@ -35,35 +37,37 @@ services:
       - --ws-external
       - --rpc-external
       - --telemetry-url=ws://telemetry.polkadot.io:1024
-    ports:
-      - '9934:9933'
-      - '9945:9944'
-      - '30334:30333'
+    # ports:
+    #   - '9934:9933'
+    #   - '9945:9944'
+    #   - '30334:30333'
   polkadot-ui:
     image: centrifugeio/polkadot-ui
-    # networks:
-    #   - network-a
-    #   - internet
+    networks:
+      testnet:
+        aliases:
+          - polkadot_ui
     ports:
       - '3000:80'
-    links:
-      - node_alice
-      - node_bob
-  test:
+    # links:
+    #   - node_alice
+    #   - node_bob
+  e2e:
     build:
       context: .
       dockerfile: Dockerfile.test
-    links:
-      - node_alice
-      - node_bob
-      - polkadot-ui
+    # links:
+    #   - node_alice
+    #   - node_bob
+    #   - polkadot-ui
     ports:
       - '8080:8080'
-    # networks:
-    #   - network-a
-    #   - internet
+    networks:
+      testnet:
+        aliases:
+          - polkadot_ui
     volumes:
-      - './tmp/test:/mnt/app'
+      - './tmp/e2e:/mnt/app'
       - './tmp/media:/mnt/media'
     # command: ['wait_for_it.sh', 'node_alice:9944', '--', 'npm', 'run', 'test']
     # command: ['npm', 'run', 'test']
@@ -72,7 +76,8 @@ volumes:
   node_alice:
   node_bob:
   polkadot-ui:
-  test:
-# networks:
-#   network-a:
-#   internet:
+  e2e:
+networks:
+  testnet:
+    external:
+      name: standalone

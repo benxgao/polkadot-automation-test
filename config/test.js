@@ -4,7 +4,7 @@ import defaultConfig from './default';
 
 const config = {
   wsProvider: {
-    integration: 'ws://0.0.0.0:9944',
+    integration: 'ws://node_alice:9944', // TODO: Give a generic name on accessing node
     e2e: 'wss://dev-node.substrate.dev:9944'
   }
 };
