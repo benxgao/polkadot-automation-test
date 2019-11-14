@@ -20,15 +20,8 @@ jobs:
           key: npm-packages-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
           name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+          command: ./scripts/circleci/install_docker_compose.sh
       - setup_remote_docker
       - run:
-          name: End-to-End testing
-          command: |
-            set -x
-            docker network create --driver bridge standalone
-            docker-compose up -d
-            docker run $(docker ps | grep "e2e" | awk '/ / { print $2 }') npm run test:e2e
+          name: Run End-to-End testing
+          command: ./scripts/circleci/run_automation_test.sh -t e2e
