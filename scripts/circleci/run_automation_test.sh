@@ -33,6 +33,6 @@ if [ -z "$(docker network ls | grep "standalone" | awk '/ / { print $2 }')" ]; t
   docker network create --driver bridge standalone
 fi
 
-docker-compose up -d
+docker-compose up -d --build
 
 docker run $(docker ps | grep "e2e" | awk '/ / { print $2 }') npm run test:${t}
