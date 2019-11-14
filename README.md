@@ -43,4 +43,5 @@ docker run $(docker ps | grep "e2e" | awk '/ / { print $2 }') npm run test:e2e
 
 ## To do
 
-- Relace `Substrate` with a particular network
+- Spin up containers in sequence by `wait-for-it.sh`;
+- Relace `Substrate` with a particular network;
