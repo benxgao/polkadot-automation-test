@@ -4,12 +4,13 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_alice:/mnt/node'
+      - './genesis/:/mnt/genesis:ro'
     networks:
       testnet:
         aliases:
           - node_alice
     command:
-      - --chain=local
+      - --chain=/mnt/genesis/local_testnet.json
       - --base-path=/mnt/node
       - --alice
       - --node-key=0000000000000000000000000000000000000000000000000000000000000001
@@ -25,12 +26,13 @@ services:
     image: parity/substrate
     volumes:
       - './tmp/node_bob:/mnt/node'
+      - './genesis/:/mnt/genesis:ro'
     networks:
       testnet:
         aliases:
           - node_bob
     command:
-      - --chain=local
+      - --chain=/mnt/genesis/local_testnet.json
       - --base-path=/mnt/node
       - --bob
       - --validator
@@ -49,17 +51,10 @@ services:
           - polkadot_ui
     ports:
       - '3000:80'
-    # links:
-    #   - node_alice
-    #   - node_bob
   e2e:
     build:
       context: .
-      dockerfile: Dockerfile.test
-    # links:
-    #   - node_alice
-    #   - node_bob
-    #   - polkadot-ui
+      dockerfile: Dockerfile.integration
     ports:
       - '8080:8080'
     networks:
