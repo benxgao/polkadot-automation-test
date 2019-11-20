@@ -39,7 +39,9 @@ describe('api', () => {
       console.log('Transfer sent with hash', hash.toHex());
 
       // Here we subscribe to any balance changes and update the on-screen value
-      api.query.balances.freeBalance(Alice, current => {
+      await api.query.balances.freeBalance(Alice, current => {
+        console.log('revious', previous);
+        console.log('current', current);
         // Calculate the delta
         const change = current.sub(previous);
 
@@ -47,11 +49,18 @@ describe('api', () => {
         // the initial balance change will also be zero)
         if (!change.isZero()) {
           previous = current;
+          // Transfer sent with hash 0xf5a4dcd351a9bc26b8767b7a3ba82ac0e0b590dd896f59b03bc0f7c10d9be3f0
+
+          // console.log src/__tests__/api.test.js:43
+          //   revious <BN: 3635c99e50996d2893>
+
+          // console.log src/__tests__/api.test.js:44
+          //   current <BN: 3635c99e50996d2893>
+
           console.log(`New balance change of: ${change}`);
+          expect(change).toBe(12345);
         }
       });
-
-      expect(true);
     });
   });
 });
