@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "test": "jest --coverage",
     "test:integration": "TEST_TYPE=integration jest --coverage",
-    "test:e2e": "TEST_TYPE=e2e jest --coverage"
+    "test:e2e": "TEST_TYPE=e2e jest --coverage && npm run codecov"
   },
   "engines": {
     "node": ">=10"
@@ -34,6 +34,8 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-polyfill": "^6.26.0",
+    "codecov": "^3.6.1",
+    "cross-env": "^6.0.3",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.5.0",
