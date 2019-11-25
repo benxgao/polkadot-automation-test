@@ -8,7 +8,16 @@ const initApiPromise = async () => {
   console.log('providerUrl', providerUrl);
 
   console.log('process.env.TEST_TYPE: ', process.env.TEST_TYPE);
-  return await ApiPromise.create({ provider: wsProvider });
+
+  const startOfInitApi = Date.now();
+  const api = await ApiPromise.create({ provider: wsProvider });
+
+  await api.isReady;
+
+  const endOfInitApi = Date.now();
+  console.log('Time spent on initialising Api: ', endOfInitApi - startOfInitApi);
+
+  return api;
 };
 
 export default initApiPromise;

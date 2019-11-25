@@ -1,13 +1,18 @@
-import initApiPromise from '../../testHelper/initApiPromise';
+import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
+import initApiPromise from '../../testHelper/initApiPromise';
 
 const Alice = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
-const BOB = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty';
+const Bob = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty';
 
 describe('api', () => {
   test('should be able to be initialized', async () => {
+    const startOfInitApi = Date.now();
     const api = await initApiPromise();
     await api.isReady;
+    const endOfInitApi = Date.now();
+
+    console.log('Time spent on initialising Api: ', endOfInitApi - startOfInitApi);
 
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),
@@ -15,52 +20,45 @@ describe('api', () => {
       api.rpc.system.version()
     ]);
 
-    console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+    // console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
   });
 
   describe('transfer', () => {
-    test('should be able to made', async () => {
+    test('should be able to made', async done => {
       const api = await initApiPromise();
       await api.isReady;
 
       const keyring = new Keyring({ type: 'sr25519' });
+
+      // keyring.getPair(Alice)
       const alice = keyring.addFromUri('//Alice');
+      const nonce = await api.query.system.accountNonce(Alice);
+      const previous = await api.query.balances.freeBalance(Alice);
 
-      let previous = await api.query.balances.freeBalance(Alice);
+      console.log(`${Alice}: nonce (${nonce}) has a balance of ${previous.toString(10)}`);
 
-      console.log(`${Alice} has a balance of ${previous}`);
-      console.log(
-        `You may leave this example running and start example 06 or transfer any value to ${Alice}`
-      );
+      return await api.tx.balances
+        .transfer(Bob, 100)
+        .signAndSend(alice, { nonce }, async ({ events = [], status }) => {
+          console.log('Transaction status:', status.type);
 
-      const transfer = api.tx.balances.transfer(BOB, 12345);
-      const hash = await transfer.signAndSend(alice);
+          if (status.isFinalized) {
+            console.log('Completed at block hash', status.asFinalized.toHex());
 
-      console.log('Transfer sent with hash', hash.toHex());
+            events.forEach(({ phase, event: { data, method, section } }) => {
+              console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
+            });
 
-      // Here we subscribe to any balance changes and update the on-screen value
-      await api.query.balances.freeBalance(Alice, current => {
-        console.log('revious', previous);
-        console.log('current', current);
-        // Calculate the delta
-        const change = current.sub(previous);
+            return await api.query.balances.freeBalance(Alice, current => {
+              console.log('current: ', current);
+              console.log(`New balance change of: ${current.sub(previous)}`);
 
-        // Only display positive value changes (Since we are pulling `previous` above already,
-        // the initial balance change will also be zero)
-        if (!change.isZero()) {
-          previous = current;
-          // Transfer sent with hash 0xf5a4dcd351a9bc26b8767b7a3ba82ac0e0b590dd896f59b03bc0f7c10d9be3f0
-
-          // console.log src/__tests__/api.test.js:43
-          //   revious <BN: 3635c99e50996d2893>
-
-          // console.log src/__tests__/api.test.js:44
-          //   current <BN: 3635c99e50996d2893>
-
-          console.log(`New balance change of: ${change}`);
-          expect(change).toBe(12345);
-        }
-      });
+              const transferred = current.sub(previous) < 0;
+              expect(transferred).toBe(true);
+              done();
+            });
+          }
+        });
     });
   });
 });

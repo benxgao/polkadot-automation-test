@@ -1,4 +1,17 @@
-# substrate-automation-test
+<h1 align="center">
+  substrate-automation-test
+</h1>
+<p align="center">
+  <a href="https://circleci.com/gh/benxgao/substrate-automation-test">
+    <img src="https://circleci.com/gh/benxgao/substrate-automation-test.svg?style=shield" alt="Current CircleCI build status." />
+  </a>
+  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://codecov.io/gh/benxgao/substrate-automation-test/">
+    <img src="https://img.shields.io/codecov/c/github/benxgao/substrate-automation-test/coverage.svg?style=flat-square" alt="Test coverage" />
+  </a>
+</p>
 
 ## Get started
 
