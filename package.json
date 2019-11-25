@@ -4,10 +4,10 @@
   "description": "Automation testing with Substrate and Polkadot",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "nodemon --exec babel-node src/server.js",
     "test": "jest --coverage",
     "test:integration": "TEST_TYPE=integration jest --coverage",
-    "test:e2e": "TEST_TYPE=e2e jest --coverage && npm run codecov"
+    "test:e2e": "TEST_TYPE=e2e jest --coverage && ./node_modules/.bin/codecov"
   },
   "engines": {
     "node": ">=10"
@@ -26,25 +26,28 @@
     "@polkadot/api": "^0.96.1",
     "@polkadot/keyring": "^1.7.0-beta.7",
     "express": "^4.17.1",
+    "npm-check": "^5.9.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-polyfill": "^6.26.0",
     "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
-    "eslint": "^6.6.0",
+    "eslint": "^6.7.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.0.3",
+    "eslint-plugin-jest": "^23.0.4",
     "eslint-plugin-prettier": "^3.1.1",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^9.4.3",
+    "nodemon": "^2.0.1",
     "prettier": "^1.19.1"
   }
 }
