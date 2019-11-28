@@ -8,16 +8,16 @@ jobs:
 
       - restore_cache:
           keys:
-            - npm-packages-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - npm-packages-v1-{{ .Branch }}-
-            - npm-packages-v1-
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
       - run:
           name: Install Dependencies
           command: npm install
       - save_cache:
           paths:
             - ~/tmp/npm
-          key: npm-packages-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Install Docker Compose
           command: ./scripts/circleci/install_docker_compose.sh

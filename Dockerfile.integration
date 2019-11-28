@@ -1,34 +1,38 @@
-FROM node:10
+FROM node:13.2.0-alpine3.10
 
 LABEL maintainer "ben.gao@centrality.ai"
 
-RUN apt-get update && apt-get install -y \
-  automake \
-  netcat \
-  curl \
-  && rm -rf /var/lib/apt/lists/*
-
 ENV PROJECT_DIR=/app
+
 WORKDIR $PROJECT_DIR
 RUN echo $PWD
-
-# RUN apt-get -q update && apt-get -qy install netcat
-# RUN git clone git@github.com:vishnubob/wait-for-it.git
-
 COPY package.json $PROJECT_DIR
-RUN npm install
-RUN npm audit fix
+COPY yarn.lock $PROJECT_DIR
 COPY . $PROJECT_DIR
 
-# RUN apk add --no-cache --virtual .gyp python make g++ \
-#   && npm install \
-#   && apk del .gyp
+RUN apk update && apk --no-cache add --virtual native-deps \
+  automake \
+  bash \
+  curl \
+  g++ \
+  gcc \
+  git \
+  libgcc \
+  libstdc++ \
+  linux-headers \
+  make \
+  netcat-openbsd \
+  python \
+  yarn \
+  && yarn global add node-gyp \
+  && yarn \
+  && apk del native-deps \
+  && rm -rf /var/cache/apk/*
 
 ENV MEDIA_DIR=/media \
   NODE_ENV=test \
   APP_PORT=3000
 
-RUN echo $PWD
 RUN ls -l
 
 # HEALTHCHECK --interval=1m --timeout=3s \
