@@ -35,4 +35,4 @@ fi
 
 docker-compose up -d --build
 
-docker run $(docker ps | grep "e2e" | awk '/ / { print $2 }') npm run test:${t}
+docker run $(docker ps -a | grep "e2e" | awk '/ / { print $2 }') yarn test:${t}
