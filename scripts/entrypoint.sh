@@ -4,24 +4,23 @@
 # $1 is our command
 CMD=$1
 
+# docker-compose run api_test integration
+# docker-compose run api_test e2e
+# docker-compose run api_test yarn test
 case "$CMD" in
-  "dev" )
-    npm install
-    export NODE_ENV=development
-    exec npm run dev
-    ;;
+"integration")
+  echo "Start integration tests"
+  export NODE_ENV=development
+  exec yarn test:integration
+  exec tail -f /dev/null
+  ;;
 
-  "start" )
-    # we can modify files here, using ENV variables passed in
-    # "docker create" command. It can't be done during build process.
-    echo "db: $DATABASE_ADDRESS" >> /app/config.yml
-    export NODE_ENV=test
-    exec npm start
-    ;;
+"e2e")
+  echo "Start e2e tests"
+  exec yarn test:e2e
+  ;;
 
-   * )
-    # Run custom command. Thanks to this line we can still use
-    # "docker run our_image /bin/bash" and it will work
-    exec $CMD ${@:2}
-    ;;
+*)
+  exec $CMD ${@:2}
+  ;;
 esac

@@ -35,4 +35,4 @@ fi
 
 docker-compose up -d --build
 
-docker run $(docker ps -a | grep "e2e" | awk '/ / { print $2 }') yarn test:${t}
+docker-compose run api_test ${t}
