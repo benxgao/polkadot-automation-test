@@ -13,8 +13,8 @@ services:
       - --base-path=/mnt/node
       - --alice
       - --validator
-      - --ws-external
-      - --rpc-external
+      - --unsafe-ws-external
+      - --unsafe-rpc-external
       - --telemetry-url=ws://telemetry.polkadot.io:1024
       - --rpc-cors=all
     ports:
@@ -37,8 +37,8 @@ services:
       - --base-path=/mnt/node
       - --bob
       - --validator
-      - --ws-external
-      - --rpc-external
+      - --unsafe-ws-external
+      - --unsafe-rpc-external
       - --telemetry-url=ws://telemetry.polkadot.io:1024
       - --rpc-cors=all
     ports:
@@ -58,16 +58,16 @@ services:
     networks:
       - substrate_automation_testnet
 
-  api_test:
-    container_name: api_test
-    build:
-      context: .
-      dockerfile: integration.Dockerfile
-    volumes:
-      - './tmp/api_test:/mnt/app'
-    networks:
-      - substrate_automation_testnet
-    command: ['tail', '-f', '/dev/null']
+  # automation_test:
+  #   container_name: automation_test
+  #   build:
+  #     context: .
+  #     dockerfile: integration.Dockerfile
+  #   volumes:
+  #     - './tmp/automation_test:/mnt/app'
+  #   networks:
+  #     - substrate_automation_testnet
+  #   command: ['tail', '-f', '/dev/null']
 
 networks:
   substrate_automation_testnet:

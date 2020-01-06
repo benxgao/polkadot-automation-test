@@ -35,4 +35,4 @@ fi
 
 docker-compose up -d --build
 
-docker-compose run api_test ${t}
+docker-compose run automation_test ${t}
