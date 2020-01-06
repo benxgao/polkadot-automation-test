@@ -58,16 +58,16 @@ services:
     networks:
       - substrate_automation_testnet
 
-  # api_test:
-  #   container_name: api_test
-  #   build:
-  #     context: .
-  #     dockerfile: integration.Dockerfile
-  #   volumes:
-  #     - './tmp/api_test:/mnt/app'
-  #   networks:
-  #     - substrate_automation_testnet
-  #   command: ['tail', '-f', '/dev/null']
+  api_test:
+    container_name: api_test
+    build:
+      context: .
+      dockerfile: integration.Dockerfile
+    volumes:
+      - './tmp/api_test:/mnt/app'
+    networks:
+      - substrate_automation_testnet
+    command: ['tail', '-f', '/dev/null']
 
 networks:
   substrate_automation_testnet:

@@ -18,4 +18,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN chmod +x ./scripts/*
 
-ENTRYPOINT ["./scripts/api_test_docker_entrypoint.sh"]
+ENTRYPOINT ["./scripts/entrypoint.sh"]
