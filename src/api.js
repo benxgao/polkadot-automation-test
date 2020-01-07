@@ -1,6 +1,5 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
 // import initApiPromise from '../testHelper/initApiPromise';

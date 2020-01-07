@@ -1,4 +1,5 @@
 .vscode
+.yalc
 coverage
 node_modules
 tmp

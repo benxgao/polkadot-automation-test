@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "packages": {
+    "@cennznet/api": {
+      "signature": "cd4fa4e1f7e19e551adcffa40f1dbb09",
+      "file": true
+    },
+    "@cennznet/types": {
+      "signature": "6a7d9441ad29ee4cd7f0f1ec685eb3ae",
+      "file": true
+    }
+  }
+}

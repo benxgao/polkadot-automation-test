@@ -1,6 +1,8 @@
-import { ApiPromise, WsProvider } from '@polkadot/api';
-// import { api } from '../api';
+import { WsProvider } from '@polkadot/api';
+import { Api as ApiPromise } from '@cennznet/api';
 import config from '../config';
+
+console.log('ApiPromise', ApiPromise);
 
 const initApiPromise = async () => {
   const providerUrl = config.wsProvider[`${process.env.TEST_TYPE || 'default'}`];
