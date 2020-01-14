@@ -33,6 +33,11 @@ if [ -z "$(docker network ls | grep "standalone" | awk '/ / { print $2 }')" ]; t
   docker network create --driver bridge standalone
 fi
 
-docker-compose up -d --build
+if [ -z "$(docker ps -a | grep "node_alice")" ]; then
+  docker-compose up -d --build
+else
+  docker-compose build api_test
+  dcocker-compose up -d
+fi
 
 docker-compose run automation_test ${t}
