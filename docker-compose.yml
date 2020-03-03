@@ -3,10 +3,6 @@ services:
   node_alice:
     container_name: node_alice
     image: parity/substrate
-
-    volumes:
-      - './tmp/node_alice:/mnt/node'
-      - './genesis/:/mnt/genesis:ro'
     command:
       # - --chain=/mnt/genesis/local_testnet.json
       - --chain=dev
@@ -24,32 +20,29 @@ services:
     networks:
       - substrate_automation_testnet
 
-  node_bob:
-    container_name: node_bob
-    image: parity/substrate
-
-    volumes:
-      - './tmp/node_bob:/mnt/node'
-      - './genesis/:/mnt/genesis:ro'
-    command:
-      # - --chain=/mnt/genesis/local_testnet.json
-      - --chain=dev
-      - --base-path=/mnt/node
-      - --bob
-      - --validator
-      - --unsafe-ws-external
-      - --unsafe-rpc-external
-      - --telemetry-url=ws://telemetry.polkadot.io:1024
-      - --rpc-cors=all
-    ports:
-      - '9934:9933'
-      - '9945:9944'
-      - '30334:30333'
-    networks:
-      - substrate_automation_testnet
+  # node_bob:
+  #   container_name: node_bob
+  #   image: parity/substrate
+  #   command:
+  #     # - --chain=/mnt/genesis/local_testnet.json
+  #     - --chain=dev
+  #     - --base-path=/mnt/node
+  #     - --bob
+  #     - --validator
+  #     - --unsafe-ws-external
+  #     - --unsafe-rpc-external
+  #     - --telemetry-url=ws://telemetry.polkadot.io:1024
+  #     - --rpc-cors=all
+  #   ports:
+  #     - '9934:9933'
+  #     - '9945:9944'
+  #     - '30334:30333'
+  #   networks:
+  #     - substrate_automation_testnet
 
   polkadot_ui:
     container_name: polkadot_ui
+    image: benxgao/polkadot-apps
     build:
       context: .
       dockerfile: polkadot_ui.Dockerfile
@@ -58,16 +51,14 @@ services:
     networks:
       - substrate_automation_testnet
 
-  # automation_test:
-  #   container_name: automation_test
-  #   build:
-  #     context: .
-  #     dockerfile: integration.Dockerfile
-  #   volumes:
-  #     - './tmp/automation_test:/mnt/app'
-  #   networks:
-  #     - substrate_automation_testnet
-  #   command: ['tail', '-f', '/dev/null']
+  automation_test:
+    container_name: automation_test
+    build:
+      context: .
+      dockerfile: integration.Dockerfile
+    networks:
+      - substrate_automation_testnet
+    command: ['tail', '-f', '/dev/null']
 
 networks:
   substrate_automation_testnet:
