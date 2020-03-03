@@ -36,8 +36,8 @@ fi
 if [ -z "$(docker ps -a | grep "node_alice")" ]; then
   docker-compose up -d --build
 else
-  docker-compose build api_test
+  docker-compose build automation_test
   dcocker-compose up -d
 fi
 
-docker-compose run automation_test ${t}
+docker-compose run --rm automation_test ${t}
