@@ -4,9 +4,9 @@
 # $1 is our command
 CMD=$1
 
-# docker-compose run api_test integration
-# docker-compose run api_test e2e
-# docker-compose run api_test yarn test
+# docker-compose run automation_test integration
+# docker-compose run automation_test e2e
+# docker-compose run automation_test yarn test
 case "$CMD" in
 "integration")
   echo "Start integration tests"
